@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ruleset name="HealthLens">
+	<description>HealthLens coding and PHP 7.4 compatibility rules.</description>
+	<file>healthlens.php</file>
+	<file>src</file>
+	<rule ref="WordPress">
+		<!-- PSR-4 requires Plugin.php to match the HealthLens\Plugin class. -->
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" path="src/Plugin.php" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" path="src/Plugin.php" />
+		<!-- PSR-4 requires domain class filenames to match their class names. -->
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" path="src/Domain/" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" path="src/Domain/" />
+		<!-- PSR-4 requires application class filenames to match their class names. -->
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" path="src/Application/" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" path="src/Application/" />
+		<!-- Release tooling is CLI-only and intentionally uses direct filesystem I/O. -->
+		<exclude-pattern>/src/Release/PublicRepositoryExporter.php</exclude-pattern>
+		<exclude-pattern>/src/Release/PublicRepositoryLinkAuditor.php</exclude-pattern>
+	</rule>
+	<rule ref="PHPCompatibilityWP" />
+	<config name="testVersion" value="7.4-" />
+	<arg name="basepath" value="." />
+	<arg name="colors" />
+	<arg name="parallel" value="4" />
+	<exclude-pattern>/vendor/</exclude-pattern>
+	<exclude-pattern>/build/</exclude-pattern>
+	<exclude-pattern>/tests/</exclude-pattern>
+</ruleset>

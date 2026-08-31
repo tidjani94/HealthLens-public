@@ -1,0 +1,26 @@
+{
+  "fixture": "healthlens-upgrade-rollback",
+  "from": {
+    "version": "0.0.9",
+    "schema": 1
+  },
+  "to": {
+    "version": "0.1.0",
+    "schema": 3
+  },
+  "existing_options": {
+    "healthlens_settings": {
+      "retain_data_on_uninstall": false
+    }
+  },
+  "failure": {
+    "dbdelta_call": 2,
+    "expected_schema": 1,
+    "expected_version": "0.0.9"
+  },
+  "recovery": {
+    "preserved_settings": {
+      "retain_data_on_uninstall": false
+    }
+  }
+}

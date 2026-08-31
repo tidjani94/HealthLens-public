@@ -1,0 +1,28 @@
+name: HealthLens public source quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  HEALTHLENS_CANONICAL_REPOSITORY_URL: ${{ github.server_url }}/${{ github.repository }}
+
+jobs:
+  quality:
+    name: Public source quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: zip, mbstring, xml
+          coverage: none
+      - run: composer validate --strict
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - run: composer run public:link-audit -- --root=. --repository-url="$HEALTHLENS_CANONICAL_REPOSITORY_URL"
+      - run: composer run check
