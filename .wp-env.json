@@ -1,0 +1,14 @@
+{
+  "core": "WordPress/WordPress#7.0.4",
+  "plugins": [],
+  "mappings": {
+    "wp-content/plugins/healthlens": "."
+  },
+  "config": {
+    "WP_HTTP_BLOCK_EXTERNAL": true,
+    "WP_ACCESSIBLE_HOSTS": "localhost,127.0.0.1"
+  },
+  "phpVersion": "8.3",
+  "port": 8888,
+  "testsPort": 8889
+}
