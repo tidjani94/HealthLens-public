@@ -1,0 +1,790 @@
+.healthlens-dashboard {
+	--healthlens-ink: #1d2327;
+	--healthlens-muted: #50575e;
+	--healthlens-border: #c3c4c7;
+	--healthlens-canvas: #f6f7f7;
+	--healthlens-surface: #fff;
+	--healthlens-blue: #2271b1;
+	--healthlens-blue-dark: #135e96;
+	--healthlens-healthy: #008a20;
+	--healthlens-warning: #996800;
+	--healthlens-critical: #b32d2e;
+	--healthlens-info: #3858e9;
+	--healthlens-unknown: #646970;
+	--healthlens-radius: 8px;
+	color: var(--healthlens-ink);
+}
+
+.healthlens-dashboard *,
+.healthlens-dashboard *::before,
+.healthlens-dashboard *::after {
+	box-sizing: border-box;
+}
+
+.healthlens-dashboard main {
+	max-width: 1180px;
+	padding-bottom: 48px;
+}
+
+.healthlens-dashboard h1 {
+	margin-bottom: 4px;
+	font-size: clamp(24px, 3vw, 32px);
+	font-weight: 650;
+	letter-spacing: -0.02em;
+}
+
+.healthlens-dashboard h2,
+.healthlens-dashboard h3 {
+	color: var(--healthlens-ink);
+}
+
+.healthlens-dashboard__lede {
+	max-width: 720px;
+	margin: 0 0 24px;
+	color: var(--healthlens-muted);
+	font-size: 15px;
+}
+
+.healthlens-dashboard__run-controls {
+	max-width: 760px;
+	margin: 0 0 24px;
+	padding: 18px 20px;
+	border: 1px solid var(--healthlens-border);
+	border-left: 4px solid var(--healthlens-blue);
+	border-radius: var(--healthlens-radius);
+	background: var(--healthlens-surface);
+}
+
+.healthlens-dashboard__run-controls h2 {
+	margin: 0 0 6px;
+	font-size: 16px;
+}
+
+.healthlens-dashboard__run-controls p {
+	margin: 0 0 14px;
+	color: var(--healthlens-muted);
+}
+
+.healthlens-dashboard__run-controls form {
+	margin: 0;
+}
+
+.healthlens-dashboard__notice {
+	max-width: 760px;
+}
+
+.healthlens-dashboard__tab-nav {
+	margin: 0 0 24px;
+	border-bottom: 1px solid var(--healthlens-border);
+}
+
+.healthlens-dashboard__tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	overflow: visible;
+}
+
+.healthlens-dashboard__tab {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 9px 16px;
+	color: var(--healthlens-muted);
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.healthlens-dashboard__tab:hover,
+.healthlens-dashboard__tab[aria-selected="true"] {
+	color: var(--healthlens-blue-dark);
+}
+
+.healthlens-dashboard__tab[aria-selected="true"]::after {
+	position: absolute;
+	right: 10px;
+	bottom: -1px;
+	left: 10px;
+	height: 3px;
+	border-radius: 3px 3px 0 0;
+	background: var(--healthlens-blue);
+	content: "";
+}
+
+.healthlens-dashboard__tab:focus-visible,
+.healthlens-dashboard summary:focus-visible {
+	border-radius: 3px;
+	outline: 2px solid var(--healthlens-blue);
+	outline-offset: -2px;
+	box-shadow: none;
+}
+
+.healthlens-dashboard__panel {
+	margin: 0 0 48px;
+}
+
+.healthlens-dashboard__panel[hidden] {
+	display: none;
+}
+
+.healthlens-dashboard__panel-header {
+	max-width: 760px;
+	margin: 0 0 20px;
+}
+
+.healthlens-dashboard__panel-header h2 {
+	margin: 2px 0 6px;
+	font-size: clamp(22px, 2.4vw, 28px);
+	line-height: 1.2;
+}
+
+.healthlens-dashboard__panel-header > p:last-child {
+	margin: 0;
+	color: var(--healthlens-muted);
+	font-size: 14px;
+}
+
+.healthlens-dashboard__eyebrow {
+	margin: 0;
+	color: var(--healthlens-blue-dark);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.healthlens-dashboard__surface {
+	border: 1px solid var(--healthlens-border);
+	border-radius: var(--healthlens-radius);
+	background: var(--healthlens-surface);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.healthlens-dashboard__overview-grid {
+	display: grid;
+	grid-template-columns: minmax(300px, 0.9fr) minmax(360px, 1.1fr);
+	gap: 20px;
+	margin-bottom: 20px;
+}
+
+.healthlens-dashboard__score-card,
+.healthlens-dashboard__signal-card,
+.healthlens-dashboard__distribution,
+.healthlens-dashboard__activity-card {
+	padding: 24px;
+}
+
+.healthlens-dashboard__score-card {
+	--healthlens-score-color: var(--healthlens-unknown);
+}
+
+.healthlens-dashboard__score-card--healthy {
+	--healthlens-score-color: var(--healthlens-healthy);
+}
+
+.healthlens-dashboard__score-card--attention-recommended,
+.healthlens-dashboard__score-card--problems-detected {
+	--healthlens-score-color: var(--healthlens-warning);
+}
+
+.healthlens-dashboard__score-card--critical-attention-required {
+	--healthlens-score-color: var(--healthlens-critical);
+}
+
+.healthlens-dashboard__score-card h3,
+.healthlens-dashboard__signal-card h3,
+.healthlens-dashboard__activity-card h2 {
+	margin: 0 0 18px;
+	font-size: 16px;
+}
+
+.healthlens-dashboard__score-layout {
+	display: grid;
+	grid-template-columns: 148px 1fr;
+	gap: 22px;
+	align-items: center;
+}
+
+.healthlens-dashboard__score-lens {
+	position: relative;
+	width: 148px;
+	height: 148px;
+}
+
+.healthlens-dashboard__score-lens svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	transform: rotate(-90deg);
+}
+
+.healthlens-dashboard__score-track,
+.healthlens-dashboard__score-value {
+	fill: none;
+	stroke-width: 10;
+}
+
+.healthlens-dashboard__score-track {
+	stroke: #e2e4e7;
+}
+
+.healthlens-dashboard__score-value {
+	stroke: var(--healthlens-score-color);
+	stroke-linecap: round;
+}
+
+.healthlens-dashboard__score-number {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	color: var(--healthlens-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.healthlens-dashboard__score-number strong {
+	align-self: center;
+	color: var(--healthlens-ink);
+	font-size: 42px;
+	font-weight: 650;
+	letter-spacing: -0.05em;
+}
+
+.healthlens-dashboard__score-number span {
+	align-self: center;
+	margin: 20px 0 0 4px;
+	font-size: 12px;
+}
+
+.healthlens-dashboard__score-copy p {
+	margin: 0 0 10px;
+}
+
+.healthlens-dashboard__score-band {
+	color: var(--healthlens-score-color);
+	font-size: 16px;
+}
+
+.healthlens-dashboard__coverage {
+	color: var(--healthlens-muted);
+}
+
+.healthlens-dashboard__coverage strong {
+	color: var(--healthlens-ink);
+	font-size: 20px;
+	font-variant-numeric: tabular-nums;
+}
+
+.healthlens-dashboard__coverage span {
+	white-space: nowrap;
+}
+
+.healthlens-dashboard__state {
+	margin: 0 0 20px;
+	padding: 12px 14px;
+	border-left: 4px solid var(--healthlens-blue);
+	background: var(--healthlens-canvas);
+}
+
+.healthlens-dashboard__state p {
+	margin: 0 0 4px;
+}
+
+.healthlens-dashboard__state p:last-child {
+	margin-bottom: 0;
+}
+
+.healthlens-dashboard__state--stale {
+	border-left-color: var(--healthlens-warning);
+}
+
+.healthlens-dashboard__state--current {
+	border-left-color: var(--healthlens-healthy);
+}
+
+.healthlens-dashboard__metrics {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 10px;
+	margin: 0;
+}
+
+.healthlens-dashboard__metric {
+	min-width: 0;
+	padding: 12px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.healthlens-dashboard__metric dt {
+	min-height: 32px;
+	margin: 0 0 4px;
+	color: var(--healthlens-muted);
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.healthlens-dashboard__metric dd {
+	margin: 0;
+	font-size: 24px;
+	font-weight: 650;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+}
+
+.healthlens-dashboard__metric--critical dd {
+	color: var(--healthlens-critical);
+}
+
+.healthlens-dashboard__metric--warning dd {
+	color: var(--healthlens-warning);
+}
+
+.healthlens-dashboard__metric--healthy dd {
+	color: var(--healthlens-healthy);
+}
+
+.healthlens-dashboard__distribution {
+	margin-bottom: 20px;
+}
+
+.healthlens-dashboard__section-heading {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 24px;
+	margin-bottom: 20px;
+}
+
+.healthlens-dashboard__section-heading h3 {
+	margin: 2px 0 0;
+	font-size: 18px;
+}
+
+.healthlens-dashboard__section-heading > p {
+	max-width: 480px;
+	margin: 0;
+	color: var(--healthlens-muted);
+	text-align: right;
+}
+
+.healthlens-dashboard__stacked-bar {
+	display: flex;
+	width: 100%;
+	height: 18px;
+	overflow: hidden;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 9px;
+	background: #e2e4e7;
+}
+
+.healthlens-dashboard__segment {
+	flex: var(--healthlens-segment) 1 0;
+	min-width: 4px;
+	border-right: 2px solid #fff;
+}
+
+.healthlens-dashboard__segment:last-child {
+	border-right: 0;
+}
+
+.healthlens-dashboard__segment--critical,
+.healthlens-dashboard__legend-mark--critical {
+	background: var(--healthlens-critical);
+}
+
+.healthlens-dashboard__segment--warning,
+.healthlens-dashboard__legend-mark--warning {
+	background: var(--healthlens-warning);
+}
+
+.healthlens-dashboard__segment--healthy,
+.healthlens-dashboard__legend-mark--healthy {
+	background: var(--healthlens-healthy);
+}
+
+.healthlens-dashboard__segment--info,
+.healthlens-dashboard__legend-mark--info {
+	background: var(--healthlens-info);
+}
+
+.healthlens-dashboard__segment--unknown,
+.healthlens-dashboard__legend-mark--unknown {
+	background: var(--healthlens-unknown);
+}
+
+.healthlens-dashboard__segment--missing,
+.healthlens-dashboard__legend-mark--missing {
+	background: #a7aaad;
+}
+
+.healthlens-dashboard__legend {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px 20px;
+	margin: 18px 0 0;
+}
+
+.healthlens-dashboard__legend li {
+	display: grid;
+	grid-template-columns: 24px minmax(0, 1fr) auto;
+	gap: 8px;
+	align-items: center;
+	margin: 0;
+}
+
+.healthlens-dashboard__legend-mark {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+}
+
+.healthlens-dashboard__legend strong {
+	font-variant-numeric: tabular-nums;
+}
+
+.healthlens-dashboard__empty {
+	margin: 0;
+	padding: 18px;
+	border: 1px dashed var(--healthlens-border);
+	background: var(--healthlens-canvas);
+}
+
+.healthlens-dashboard__categories {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+}
+
+.healthlens-dashboard__category {
+	display: inline-flex;
+	gap: 8px;
+	align-items: center;
+	margin: 0;
+	padding: 7px 10px;
+	border: 1px solid var(--healthlens-border);
+	border-radius: 999px;
+	background: var(--healthlens-surface);
+}
+
+.healthlens-dashboard__category strong,
+.healthlens-dashboard__legend strong {
+	font-variant-numeric: tabular-nums;
+}
+
+.healthlens-dashboard__cards {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+}
+
+.healthlens-dashboard__check-group,
+.healthlens-dashboard__category-section {
+	margin-top: 28px;
+}
+
+.healthlens-dashboard__check-group > h2,
+.healthlens-dashboard__category-section > h2 {
+	margin: 0 0 14px;
+	font-size: 18px;
+}
+
+.healthlens-dashboard__card {
+	padding: 20px;
+	border: 1px solid var(--healthlens-border);
+	border-top: 4px solid var(--healthlens-unknown);
+	border-radius: var(--healthlens-radius);
+	background: var(--healthlens-surface);
+}
+
+.healthlens-dashboard__card--critical {
+	border-top-color: var(--healthlens-critical);
+}
+
+.healthlens-dashboard__card--warning {
+	border-top-color: var(--healthlens-warning);
+}
+
+.healthlens-dashboard__card--healthy {
+	border-top-color: var(--healthlens-healthy);
+}
+
+.healthlens-dashboard__card--info {
+	border-top-color: var(--healthlens-info);
+}
+
+.healthlens-dashboard__card--unknown {
+	border-top-color: var(--healthlens-unknown);
+}
+
+.healthlens-dashboard__card--missing {
+	border-top-color: #a7aaad;
+	border-top-style: dashed;
+}
+
+.healthlens-dashboard__card-header {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 14px;
+	align-items: start;
+}
+
+.healthlens-dashboard__card-eyebrow {
+	margin: 0 0 3px;
+	color: var(--healthlens-muted);
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.healthlens-dashboard__card h3 {
+	margin: 0 0 10px;
+	font-size: 17px;
+	line-height: 1.25;
+}
+
+.healthlens-dashboard__status {
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	margin: 0 0 10px;
+	padding: 5px 9px 5px 6px;
+	border: 1px solid currentcolor;
+	border-radius: 999px;
+	font-size: 12px;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.healthlens-dashboard__status--critical {
+	color: var(--healthlens-critical);
+	background: #fce8e6;
+}
+
+.healthlens-dashboard__status--warning {
+	color: var(--healthlens-warning);
+	background: #fff4cc;
+}
+
+.healthlens-dashboard__status--healthy {
+	color: var(--healthlens-healthy);
+	background: #e7f6ea;
+}
+
+.healthlens-dashboard__status--info {
+	color: var(--healthlens-info);
+	background: #eef0ff;
+}
+
+.healthlens-dashboard__status--unknown {
+	color: var(--healthlens-unknown);
+	background: #f0f0f1;
+}
+
+.healthlens-dashboard__status--missing {
+	color: var(--healthlens-muted);
+	background: #f6f7f7;
+}
+
+.healthlens-dashboard__status span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border: 1px solid currentcolor;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.72);
+	font-size: 11px;
+}
+
+.healthlens-dashboard__check-id {
+	color: var(--healthlens-muted);
+	font-size: 12px;
+}
+
+.healthlens-dashboard__details {
+	margin-top: 14px;
+	padding-top: 12px;
+	border-top: 1px solid #dcdcde;
+}
+
+.healthlens-dashboard__details summary {
+	color: var(--healthlens-blue-dark);
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.healthlens-dashboard__details dl {
+	display: grid;
+	grid-template-columns: minmax(110px, auto) 1fr;
+	gap: 6px 16px;
+	margin-bottom: 0;
+}
+
+.healthlens-dashboard__details dt {
+	font-weight: 600;
+}
+
+.healthlens-dashboard__details dd {
+	min-width: 0;
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.healthlens-dashboard__activity-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+	gap: 20px;
+}
+
+.healthlens-plugin-footer {
+	margin: 24px 0 0;
+	padding-top: 12px;
+	border-top: 1px solid #dcdcde;
+	color: #646970;
+	font-size: 12px;
+}
+
+.healthlens-plugin-footer a {
+	color: inherit;
+}
+
+.healthlens-dashboard__history {
+	margin: 0;
+}
+
+.healthlens-dashboard__history li {
+	margin: 0;
+	padding: 12px 0;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.healthlens-dashboard__history li:first-child {
+	padding-top: 0;
+}
+
+.healthlens-dashboard__history li:last-child {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+.healthlens-dashboard__metrics--notifications {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin-bottom: 18px;
+}
+
+@media (max-width: 960px) {
+	.healthlens-dashboard__overview-grid,
+	.healthlens-dashboard__activity-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.healthlens-dashboard__cards {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 782px) {
+	.healthlens-dashboard main {
+		padding-right: 10px;
+	}
+
+	.healthlens-dashboard__overview-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.healthlens-dashboard__score-card,
+	.healthlens-dashboard__signal-card,
+	.healthlens-dashboard__distribution,
+	.healthlens-dashboard__activity-card {
+		padding: 18px;
+	}
+
+	.healthlens-dashboard__score-layout {
+		grid-template-columns: 120px minmax(0, 1fr);
+		gap: 16px;
+	}
+
+	.healthlens-dashboard__score-lens {
+		width: 120px;
+		height: 120px;
+	}
+
+	.healthlens-dashboard__score-number strong {
+		font-size: 34px;
+	}
+
+	.healthlens-dashboard__metrics,
+	.healthlens-dashboard__legend {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.healthlens-dashboard__section-heading {
+		display: block;
+	}
+
+	.healthlens-dashboard__section-heading > p {
+		margin-top: 8px;
+		text-align: left;
+	}
+}
+
+@media (max-width: 480px) {
+	.healthlens-dashboard__score-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.healthlens-dashboard__score-lens {
+		margin: 0 auto;
+	}
+
+	.healthlens-dashboard__metrics,
+	.healthlens-dashboard__legend,
+	.healthlens-dashboard__metrics--notifications {
+		grid-template-columns: 1fr;
+	}
+
+	.healthlens-dashboard__metric dt {
+		min-height: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.healthlens-dashboard *,
+	.healthlens-dashboard *::before,
+	.healthlens-dashboard *::after {
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+@media (forced-colors: active) {
+	.healthlens-dashboard__surface,
+	.healthlens-dashboard__card,
+	.healthlens-dashboard__metric,
+	.healthlens-dashboard__category,
+	.healthlens-dashboard__stacked-bar {
+		border-color: CanvasText;
+	}
+
+	.healthlens-dashboard__segment,
+	.healthlens-dashboard__legend-mark,
+	.healthlens-dashboard__score-value {
+		forced-color-adjust: auto;
+	}
+}
