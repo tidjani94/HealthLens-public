@@ -86,8 +86,7 @@ final class DashboardPage {
 			self::CAPABILITY,
 			self::PAGE_SLUG,
 			array( $this, 'render' ),
-			'dashicons-heart',
-			3
+			'dashicons-heart'
 		);
 	}
 

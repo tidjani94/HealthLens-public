@@ -52,6 +52,7 @@ final class DashboardPageTest extends TestCase {
 		$this->assertSame( 'HealthLens', $GLOBALS['healthlens_test_menu_pages'][0]['menu_title'] );
 		$this->assertSame( DashboardPage::CAPABILITY, $GLOBALS['healthlens_test_menu_pages'][0]['capability'] );
 		$this->assertSame( DashboardPage::PAGE_SLUG, $GLOBALS['healthlens_test_menu_pages'][0]['menu_slug'] );
+		$this->assertNull( $GLOBALS['healthlens_test_menu_pages'][0]['position'] );
 	}
 
 	public function test_assets_are_scoped_to_the_dashboard_screen(): void {
